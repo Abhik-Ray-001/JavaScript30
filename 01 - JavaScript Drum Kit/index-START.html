@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>JS Drum Kit</title>
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="https://fav.farm/🔥" />
 </head>
+
 <body>
 
 
@@ -58,45 +60,56 @@
   <audio data-key="75" src="sounds/tom.wav"></audio>
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
-<style>
-  .key{
-    cursor: pointer;
-    user-select: none;
-  }  
-</style>
-<script>
-  const keys = {}
+  <style>
+    .key {
+      cursor: pointer;
+      user-select: none;
+    }
+  </style>
+  <script>
+    const keys = {}
 
-  const keyElements = document.querySelectorAll('.key')
-  console.log(keyElements)
+    const keyElements = document.querySelectorAll('.key')
 
-  keyElements.forEach((keyElement) => {
-    const dataKey = keyElement.getAttribute('data-key');
-    const audioElement = document.querySelector(`audio[data-key="${dataKey}"]`);
-    
-    keyElement.addEventListener('click', () => {
-      // Add audio effects
+    keyElements.forEach((keyElement) => {
+      const dataKey = keyElement.getAttribute('data-key');
       const audioElement = document.querySelector(`audio[data-key="${dataKey}"]`);
-      setTimeout(() => {
-          audioElement.play();
-      })
-    })
 
-    document.addEventListener('keydown', (e) => {
-      if(e.keyCode == keyElement.getAttribute('data-key')){
+      keyElement.addEventListener('click', () => {
+        // Add audio effects
+        const audioElement = document.querySelector(`audio[data-key="${dataKey}"]`);
         setTimeout(() => {
+          keyElement.classList.add('playing');
+          audioElement.currentTime = 0;
           audioElement.play();
+        })
+
+        setTimeout(() => {
+          keyElement.classList.remove('playing');
+        }, 1000)
       })
-      }
+
+      document.addEventListener('keydown', (e) => {
+        if (e.keyCode == keyElement.getAttribute('data-key')) {
+          setTimeout(() => {
+            keyElement.classList.add('playing');
+            audioElement.currentTime = 0;
+            audioElement.play();
+          })
+          setTimeout(() => {
+            keyElement.classList.remove('playing');
+          }, 1000)
+        }
+      })
+
+      const kbdElement = keyElement.children[0];
+
+      console.log(keyElement, kbdElement.innerHTML)
     })
 
-    const kbdElement = keyElement.children[0];
-    
-    console.log(keyElement, kbdElement.innerHTML)
-  })
-
-</script>
+  </script>
 
 
 </body>
+
 </html>
