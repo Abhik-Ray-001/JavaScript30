@@ -58,7 +58,42 @@
   <audio data-key="75" src="sounds/tom.wav"></audio>
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
+<style>
+  .key{
+    cursor: pointer;
+    user-select: none;
+  }  
+</style>
 <script>
+  const keys = {}
+
+  const keyElements = document.querySelectorAll('.key')
+  console.log(keyElements)
+
+  keyElements.forEach((keyElement) => {
+    const dataKey = keyElement.getAttribute('data-key');
+    const audioElement = document.querySelector(`audio[data-key="${dataKey}"]`);
+    
+    keyElement.addEventListener('click', () => {
+      // Add audio effects
+      const audioElement = document.querySelector(`audio[data-key="${dataKey}"]`);
+      setTimeout(() => {
+          audioElement.play();
+      })
+    })
+
+    document.addEventListener('keydown', (e) => {
+      if(e.keyCode == keyElement.getAttribute('data-key')){
+        setTimeout(() => {
+          audioElement.play();
+      })
+      }
+    })
+
+    const kbdElement = keyElement.children[0];
+    
+    console.log(keyElement, kbdElement.innerHTML)
+  })
 
 </script>
 
