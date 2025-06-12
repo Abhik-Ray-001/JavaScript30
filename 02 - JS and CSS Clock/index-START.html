@@ -43,6 +43,7 @@
       margin: 50px auto;
       position: relative;
       padding: 2rem;
+      transform: rotate(90deg);
       box-shadow:
         0 0 0 4px rgba(0,0,0,0.1),
         inset 0 0 0 3px #EFEFEF,
@@ -63,13 +64,85 @@
       background: black;
       position: absolute;
       top: 50%;
+      font-size: 1.75rem;
+    }
+
+    .second-hand {
+      transform-origin: right;
+      animation-timing-function: linear;
+    }
+
+    .second-hand::after {
+      content: 'Secundis';
+    }
+
+    .min-hand {
+      transform-origin: right;
+      animation-timing-function: linear;
+    }
+
+    .min-hand::after {
+      content: 'Minuta'
+    }
+
+    .hour-hand {
+      transform-origin: right;
+      animation-timing-function: linear;
+    }
+
+    .hour-hand::after{
+      content: 'Horae'
     }
 
   </style>
 
   <script>
 
+    function getDegrees() {
+      return 
+    }
+    function initHands(){
+      const date = new Date();
 
+      const secondDegrees = (date.getSeconds() * 6) % 360;
+      const secHand = document.querySelector('.second-hand');
+      secHand.animate({
+        transform: [`rotate(${secondDegrees}deg)`, `rotate(${360+secondDegrees}deg)`]
+      }, {
+        duration: 60000,
+        rangeStart: "cover 0%",
+        rangeEnd: "cover 100%",
+        iterations: Infinity
+      })
+
+      const minuteDegrees = (date.getMinutes() * 6) % 360;
+      const minHand = document.querySelector('.min-hand');
+      minHand.animate({
+        transform: [`rotate(${minuteDegrees}deg)`, `rotate(${360+minuteDegrees}deg)`]
+      }, {
+        duration: 60000 * 60,
+        rangeStart: "cover 0%",
+        rangeEnd: "cover 100%",
+        iterations: Infinity
+
+      })
+
+
+      const hourDegrees = (date.getHours() * 30) % 360;
+      const hourHand = document.querySelector('.hour-hand');
+      hourHand.animate({
+        transform: [`rotate(${hourDegrees}deg)`, `rotate(${360+hourDegrees}deg)`]
+      }, {
+        duration: 1000 * 60 * 60 * 12,
+        rangeStart: "cover 0%",
+        rangeEnd: "cover 100%",
+        iterations: Infinity
+      })
+    }
+
+    setTimeout(() => {
+      initHands();
+    })
   </script>
 </body>
 </html>
